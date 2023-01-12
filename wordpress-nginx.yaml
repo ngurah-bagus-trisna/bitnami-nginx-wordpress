@@ -36,21 +36,19 @@ spec:
             - name: wordpress-data
               mountPath: /bitnami/wordpress
           env:
-            - name: MYSQL_CLIENT_FLAVOR
-              value: mysql
-            - name: MYSQL_CLIENT_CREATE_DATABASE_NAME
-              value: wordpress
-            - name: MYSQL_CLIENT_DATABASE_HOST
+            - name: ALLOW_EMPTY_PASSWORD
+              value: yes
+            - name: WORDPRESS_DATABASE_HOST
               value: mysql-service.default.svc.cluster.local
-            - name: MYSQL_CLIENT_CREATE_DATABASE_PASSWORD
+            - name: WORDPRESS_DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: wp-db-secrets
                   key: MYSQL_ROOT_PASSWORD
-            - name: MYSQL_CLIENT_DATABASE_ROOT_USER
-              value: wp-user
-            - name: MYSQL_CLIENT_DATABASE_ROOT_PASSWORD
-              value: <instert-pass>
+            - name: WORDPRESS_DATABASE_USER
+              value: root
+            - name: WORDPRESS_DATABASE_NAME
+              value: wordpress
       volumes:
         - name: wordpress-data
           persistentVolumeClaim:
